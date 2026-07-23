@@ -97,8 +97,7 @@ Route::prefix('v1')->group(function () {
 
     // OAuth2 Token endpoints (للتطبيقات الخارجية)
     Route::post('/oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken')
-        ->middleware('throttle:auth')
-        ->name('passport.token');
+        ->middleware('throttle:auth');
 
     // OAuth2 Authorize endpoint (لـ OAuth2 flows)
     Route::get('/oauth/authorize', function () {
