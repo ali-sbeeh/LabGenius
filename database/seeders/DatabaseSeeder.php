@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProductSeeder::class ,
             CartSeeder::class ,
-            WishlistSeeder::class ,
+           // WishlistSeeder::class ,
             CartItemSeeder::class ,
             WishlistItemSeeder::class,
             ReviewSeeder::class ,
