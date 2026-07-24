@@ -6,23 +6,23 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 use App\Models\Product;
 use App\Observers\ProductObserver;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Http\Request;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        // Auto-remove out-of-stock products from all wishlists
         Product::observe(ProductObserver::class);
+
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
     }
 }
