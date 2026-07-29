@@ -51,9 +51,14 @@ return [
 
 
         'brevo' => [
-            'transport' => 'symfony',
-             'dsn' => 'brevo+api://'.env('BREVO_API_KEY').'@default',
-         ],
+            'transport' => 'smtp',
+            'host' => '://brevo.com',
+            'port' => 587,
+            'encryption' => 'tls',
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
+        ],
+
 
         'ses' => [
             'transport' => 'ses',

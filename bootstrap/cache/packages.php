@@ -1,4 +1,11 @@
 <?php return array (
+  'juanparati/brevosuite' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Juanparati\\BrevoSuite\\Providers\\BrevoSuiteProvider',
+    ),
+  ),
   'laravel/boost' => 
   array (
     'providers' => 
