@@ -12,10 +12,11 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Queue\ShouldQueue ;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable implements CanResetPasswordContract , MustVerifyEmail
+class User extends Authenticatable implements CanResetPasswordContract , MustVerifyEmail , ShouldQueue
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
