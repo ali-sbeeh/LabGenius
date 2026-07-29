@@ -21,8 +21,15 @@ class AppServiceProvider extends ServiceProvider
     {
         Product::observe(ProductObserver::class);
 
+        // الـ Rate Limiter الخاص بالـ API
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+
+        // ========== التعديل الجديد لحل مشكلة الـ Auth ==========
+        RateLimiter::for('auth', function (Request $request) {
+            return Limit::perMinute(20)->by($request->ip());
+        });
+        // ====================================================
     }
 }
