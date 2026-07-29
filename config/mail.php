@@ -50,11 +50,10 @@ return [
         ],
 
 
-        // ========== أضف هذا الجزء هنا تماماً ==========
         'brevo' => [
-            'transport' => 'brevo',
-        ],
-    // ============================================
+            'transport' => 'symfony',
+             'dsn' => 'brevo+api://'.env('BREVO_API_KEY').'@default',
+         ],
 
         'ses' => [
             'transport' => 'ses',

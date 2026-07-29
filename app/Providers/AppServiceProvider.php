@@ -33,10 +33,6 @@ class AppServiceProvider extends ServiceProvider
         });
         // ====================================================
 
-        // ========== التعديل السحري والأخير لتسجيل محرك Brevo ==========
-        Mail::extend('brevo', function (array $config) {
-            return app('brevosuite.manager')->transport();
-        });
-        // ============================================================
+
     }
 }
