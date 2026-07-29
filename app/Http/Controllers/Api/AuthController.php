@@ -82,17 +82,15 @@ class AuthController extends ApiBaseController
         }
     }
         */
-    public function register(RegisterRequest $request)
+  public function register(RegisterRequest $request)
 {
-
-
-    try{
+    try {
         // تحديد الدور بناءً على البيانات أو طلب العميل
         $role = $request->input('role', 'customer');
 
         // للبائعين، قد تحتاج لموافقة إدارية
-      //  $isActive = ($role === 'customer') ? true : false;
         $isActive = true;
+
         $user = User::create([
             'full_name' => $request->full_name,
             'email' => $request->email,
@@ -104,9 +102,8 @@ class AuthController extends ApiBaseController
             'is_active' => $isActive
         ]);
 
-         // ========== أضف هذا السطر ==========
-    event(new Registered($user));  // هذا السطر يرسل رابط التحقق تلقائياً
-    // =================================
+        // إرسال رابط التحقق تلقائياً
+        event(new Registered($user));
 
         // Send Welcome Email
         try {
@@ -126,7 +123,6 @@ class AuthController extends ApiBaseController
         $token = $tokenResult->accessToken;
         $tokenResult->token->expires_at = Carbon::now()->addDays(30);
         $tokenResult->token->save();
-
 
         $message = ($role === 'customer')
             ? 'تم إنشاء حساب الزبون بنجاح'
@@ -148,12 +144,12 @@ class AuthController extends ApiBaseController
             'scopes' => [$role]
         ], $message, 201);
 
-   }catch (\Exception $e) {
-        return $this->errorResponse('حدث خطأ أثناء إنشاء الحساب', 500);
+    } catch (\Exception $e) {
+        // ========== التعديل السحري هنا لكشف الخطأ الحقيقي ==========
+        $detailedError = 'الخطأ هو: ' . $e->getMessage() . ' | في ملف: ' . $e->getFile() . ' | سطر رقم: ' . $e->getLine();
+        return $this->errorResponse($detailedError, 500);
+        // ========================================================
     }
-
-
-
 }
 
 
