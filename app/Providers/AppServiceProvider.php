@@ -9,6 +9,7 @@ use App\Observers\ProductObserver;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,5 +32,11 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(20)->by($request->ip());
         });
         // ====================================================
+
+        // ========== التعديل السحري والأخير لتسجيل محرك Brevo ==========
+        Mail::extend('brevo', function (array $config) {
+            return app('brevosuite.manager')->transport();
+        });
+        // ============================================================
     }
 }
