@@ -2,14 +2,13 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class VerifyEmailNotification extends Notification
 {
-    use Queueable;
+    
 
     /**
      * Create a new notification instance.
@@ -38,7 +37,7 @@ class VerifyEmailNotification extends Notification
 
         return (new MailMessage)
             ->subject('✅ تأكيد البريد الإلكتروني - LapGeneus')
-            ->markdown('emails.verify', [
+            ->view('emails.verify', [
                 'user' => $notifiable,
                 'verificationUrl' => $verificationUrl,
             ]);
